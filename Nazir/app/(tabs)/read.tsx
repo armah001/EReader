@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform, ScrollView, Dimensions } from 'react-native';
+import { Image, StyleSheet, Platform, ScrollView, Dimensions, View } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -6,19 +6,21 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { PanGestureHandler, PinchGestureHandler } from 'react-native-gesture-handler';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
+import BookFlip from '@/components/BookFlip';
 
 const { width: screenWidth } = Dimensions.get('window');
 
 export default function BookScreen() {
-    const mangaPages = [
-        require('@/assets/images/one-piece-1055-3.jpg'),
-        require('@/assets/images/one-piece-1055-4.jpg'),
-        require('@/assets/images/one-piece-1055-5.jpg'),
-        require('@/assets/images/one-piece-1055-6.jpg'),
-        require('@/assets/images/one-piece-1055-18.jpg'),
-        require('@/assets/images/one-piece-1055-14.jpg'),
-      ];
+  const mangaPages = [
+    require('@/assets/images/one-piece-1055-3.jpg'),
+    require('@/assets/images/one-piece-1055-4.jpg'),
+    require('@/assets/images/one-piece-1055-5.jpg'),
+    require('@/assets/images/one-piece-1055-6.jpg'),
+    require('@/assets/images/one-piece-1055-18.jpg'),
+    require('@/assets/images/one-piece-1055-14.jpg'),
+  ];
 
+      console.log("z",mangaPages[0])
     return (
         <ParallaxScrollView
         headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -31,11 +33,16 @@ export default function BookScreen() {
         <ThemedView style={styles.titleContainer}>
             <ThemedText style={styles.titleText} type="title">One Piece</ThemedText>
         </ThemedView>
-        <ScrollView contentContainerStyle={styles.bookContent}>
+        {/* <ScrollView contentContainerStyle={styles.bookContent}>
             {mangaPages.map((page, index) => (
                 <Image key={index} source={page} resizeMode='cover' style={styles.mangaPage} />
             ))}
-        </ScrollView>
+        </ScrollView> */}
+        <View style={styles.viewStyle}>
+        <BookFlip pages={mangaPages}/> 
+        </View>
+        
+          
         </ParallaxScrollView>
     );
 }
@@ -46,6 +53,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
     
+  },
+  viewStyle:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+    height:500,
+    width:500
   },
   titleText:{
     fontSize: 28,
